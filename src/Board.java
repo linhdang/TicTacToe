@@ -1,6 +1,6 @@
 public class Board {
 
-    private String[][] board = new String[3][3];
+    String[][] board = new String[3][3];
     public void initialize() {
         int value = 1;
 
