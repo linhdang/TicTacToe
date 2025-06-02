@@ -1,3 +1,6 @@
+import java.util.List;
+import java.util.Scanner;
+
 public class Game {
     private Player playerX;
     private Player playerO;
@@ -31,11 +34,43 @@ public class Game {
         game.board.initialize();
         game.currentPlayer = game.playerX;
         System.out.println("New game, with the current player is " + game.currentPlayer.symbol);
-        game.board.draw();
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            game.board.draw();
 
-        game.move(3);
-        System.out.println("the current player is " + game.currentPlayer.symbol);
-        game.board.draw();
+            // Get current player
+            Player currentPlayer = game.currentPlayer;
+            System.out.println("the current player is " + game.currentPlayer.symbol);
+
+            // Get available moves
+            List<Integer> availableMoves = game.board.getAvailableMoves();
+            if (availableMoves.isEmpty()) {
+                System.out.println("It's a draw!");
+                break;
+            }
+
+            System.out.println("Available moves: " + availableMoves);
+            System.out.print("Enter your move (1-9): ");
+
+            int move = scanner.nextInt();
+
+            // Attempt move
+            boolean success = game.move(move);
+            if (!success) {
+                System.out.println("Invalid move! Try again.");
+                continue;
+            }
+
+            // Check for winner
+            String winnerSymbol = game.board.getWinningSymbol();
+            if (winnerSymbol != null) {
+                game.board.draw();
+                System.out.println("Player " + winnerSymbol + " wins!");
+                break;
+            }
+        }
+
+        scanner.close();
 
     }
 }
