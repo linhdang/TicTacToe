@@ -1,4 +1,3 @@
-import java.util.List;
 import java.util.Scanner;
 
 public class Game {
@@ -28,31 +27,21 @@ public class Game {
 
     public static void main(String[] args) {
         Game game = new Game();
-        game.playerX = new Player("X");
-        game.playerO = new Player("O");
+        Scanner scanner = new Scanner(System.in);
+        game.playerX = new HumanPlayer("X", scanner);
+        game.playerO = new MachinePlayer("O");
         game.board = new Board();
         game.board.initialize();
         game.currentPlayer = game.playerX;
         System.out.println("New game, with the current player is " + game.currentPlayer.symbol);
-        Scanner scanner = new Scanner(System.in);
         while (true) {
             game.board.draw();
-
             // Get current player
-            Player currentPlayer = game.currentPlayer;
+
             System.out.println("the current player is " + game.currentPlayer.symbol);
-
-            // Get available moves
-            List<Integer> availableMoves = game.board.getAvailableMoves();
-            if (availableMoves.isEmpty()) {
-                System.out.println("It's a draw!");
-                break;
-            }
-
-            System.out.println("Available moves: " + availableMoves);
-            System.out.print("Enter your move (1-9): ");
-
-            int move = scanner.nextInt();
+            Player currentPlayer = game.currentPlayer;
+            Integer move = currentPlayer.makeMove(game.board);
+            if (move == null) break;
 
             // Attempt move
             boolean success = game.move(move);
@@ -73,4 +62,5 @@ public class Game {
         scanner.close();
 
     }
+
 }
