@@ -3,8 +3,8 @@ import java.util.Scanner;
 
 public class HumanPlayer extends Player{
     private final Scanner scanner;
-    public HumanPlayer(String symbol, Scanner scanner) {
-        super(symbol);
+    public HumanPlayer(String symbol, Scanner scanner, Game game) {
+        super(symbol, game);
         this.scanner = scanner;
     }
 

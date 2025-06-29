@@ -83,4 +83,11 @@ public class Board {
         return moves;
     }
 
+    public Board copy() {
+        Board cloned =  new Board();
+        for (int i=0; i < 3; i++) {
+            cloned.board[i] = board[i].clone();
+        }
+        return cloned;
+    }
 }

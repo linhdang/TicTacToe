@@ -1,6 +1,14 @@
 import java.util.Scanner;
 
 public class Game {
+    public Player getPlayerX() {
+        return playerX;
+    }
+
+    public Player getPlayerO() {
+        return playerO;
+    }
+
     private Player playerX;
     private Player playerO;
     private Player currentPlayer;
@@ -13,10 +21,7 @@ public class Game {
             return false;
         }
 
-        int row = (position - 1) / 3;
-        int col = (position - 1) % 3;
-
-        currentPlayer.move(board, row, col);
+        currentPlayer.move(position, this.board);
         switchTurn();
         return true;
     }
@@ -28,8 +33,8 @@ public class Game {
     public static void main(String[] args) {
         Game game = new Game();
         Scanner scanner = new Scanner(System.in);
-        game.playerX = new HumanPlayer("X", scanner);
-        game.playerO = new MachinePlayer("O");
+        game.playerX = new HumanPlayer("X", scanner, game);
+        game.playerO = new MachinePlayer("O", game);
         game.board = new Board();
         game.board.initialize();
         game.currentPlayer = game.playerX;
